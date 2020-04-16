@@ -89,6 +89,7 @@ public class VcrcsScript : MonoBehaviour
             yield break;
         while (((int)Bomb.GetTime()) % 10 != Array.IndexOf(digits, cmd[1]))
             yield return null;
+        yield return null;
         Center.OnInteract();
     }
 
