@@ -73,4 +73,30 @@ public class VcrcsScript : MonoBehaviour
             Start();
         }
     }
+
+    // Twitch Plays
+    #pragma warning disable 414
+    private readonly string TwitchHelpMessage = "!{0} press <0-9> [Presses the button on that digit.]";
+    #pragma warning restore 414
+
+    IEnumerator ProcessTwitchCommand(string input)
+    {
+        var cmd = input.ToLowerInvariant().Split(' ').ToArray();
+        var digits = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+        if (cmd.Length != 2)
+            yield break;
+        if (cmd[0] != "press" || !digits.Any(x => cmd[1] == x))
+            yield break;
+        while (((int)Bomb.GetTime()) % 10 != Array.IndexOf(digits, cmd[1]))
+            yield return null;
+        yield return null;
+        Center.OnInteract();
+    }
+
+    IEnumerator TwitchHandleForcedSolve()
+    {
+        while (((int)Bomb.GetTime()) % 10 != Indices[0])
+            yield return null;
+        Center.OnInteract();
+    }
 }
