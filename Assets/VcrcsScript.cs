@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine;
-using KModkit;
 
 public class VcrcsScript : MonoBehaviour
 {
@@ -87,6 +84,8 @@ public class VcrcsScript : MonoBehaviour
             yield break;
         if (cmd[0] != "press" || !digits.Any(x => cmd[1] == x))
             yield break;
+        while (((int)Bomb.GetTime()) % 10 == Array.IndexOf(digits, cmd[1]))
+            yield return "trycancel The command to perform the action was cancelled due to a cancel request.";
         while (((int)Bomb.GetTime()) % 10 != Array.IndexOf(digits, cmd[1]))
             yield return "trycancel The command to perform the action was cancelled due to a cancel request.";
         yield return null;
@@ -96,7 +95,7 @@ public class VcrcsScript : MonoBehaviour
     IEnumerator TwitchHandleForcedSolve()
     {
         while (((int)Bomb.GetTime()) % 10 != Indices[0])
-            yield return null;
+            yield return true;
         Center.OnInteract();
     }
 }
