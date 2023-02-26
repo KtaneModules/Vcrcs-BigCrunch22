@@ -84,11 +84,9 @@ public class VcrcsScript : MonoBehaviour
             yield break;
         if (cmd[0] != "press" || !digits.Any(x => cmd[1] == x))
             yield break;
-        while (((int)Bomb.GetTime()) % 10 == Array.IndexOf(digits, cmd[1]))
-            yield return "trycancel The command to perform the action was cancelled due to a cancel request.";
+        yield return null;
         while (((int)Bomb.GetTime()) % 10 != Array.IndexOf(digits, cmd[1]))
             yield return "trycancel The command to perform the action was cancelled due to a cancel request.";
-        yield return null;
         Center.OnInteract();
     }
 
